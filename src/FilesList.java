@@ -15,7 +15,18 @@ public class FilesList{
         name = cameraName;
 
     }
-
+    public void sync(String serverFolder, String desktopFolder){
+        ArrayList<String> destinations = new ArrayList<>();
+        destinations.add("L:/Pics/" + serverFolder + "/");
+        String[] pathnames;
+            File f = new File(desktopFolder);
+            pathnames = f.list();
+            ArrayList<String> filePaths = new ArrayList<String>();
+            for (String pathname : pathnames) {
+            filePaths.add(drive + pathname);
+        }
+        CopyFilesToFolders(filePaths, destinations);
+    }
     public ArrayList<String> getFilePaths(){
             String[] pathnames;
             File f = new File(drive);
@@ -44,7 +55,9 @@ public class FilesList{
         for(String file:filePaths){
             File from = new File(file);
             File to = new File(file);
-            to = new File(destination + filePaths.get(i).substring(26));
+
+            //substring may need to be adjusted
+            to = new File(destination + filePaths.get(i).substring(17));
             i++;
            try {
             Files.copy(from.toPath(), to.toPath(), StandardCopyOption.REPLACE_EXISTING);
